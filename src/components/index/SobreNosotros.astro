@@ -1,0 +1,189 @@
+---
+import { Heart, HeartHandshake, Library, Star, Eye, Book, UsersRound  } from '@lucide/astro';
+---
+<section class="py-20 bg-gradient-to-b from-[#F8F5F2] to-white" id="sobre-nosotros">
+  <div class="max-w-6xl mx-auto px-6">
+    
+    <!-- Encabezado emocional -->
+    <div class="text-center mb-16">
+      <div class="inline-flex items-center bg-[#E8D5E8]/50 px-6 py-3 rounded-full mb-6">
+        <span class="text-[#7B3E3E] text-sm font-medium">Nuestra historia</span>
+      </div>
+      
+      <h2 class="text-4xl lg:text-5xl font-bold text-[#7B3E3E] mb-6 leading-tight">
+        Todo empezó con 
+        <span class="text-[#8B4513] relative">
+          Simón
+          <div class="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-[#E8C4B8] to-[#D4A574] rounded-full"></div>
+        </span>
+      </h2>
+      
+      <p class="text-xl text-[#5C3A32] max-w-3xl mx-auto leading-relaxed">
+        Una comunidad digital y emocional que nace desde la vivencia real de criar a un hijo con discapacidad
+      </p>
+    </div>
+
+    <!-- Historia principal -->
+    <div class="lg:flex lg:items-center lg:gap-16 mb-20">
+      
+      <!-- Contenido de la historia -->
+      <div class="lg:w-1/2 mb-12 lg:mb-0">
+        <div class="prose prose-lg max-w-none">
+          <p class="text-[#5C3A32] leading-relaxed mb-6 text-lg">
+            Cuando Simón llegó a nuestras vidas, no sabíamos que su presencia transformaría no solo nuestro mundo, 
+            sino también el de muchas otras familias que, como nosotros, navegan por las aguas profundas de la discapacidad.
+          </p>
+          
+          <p class="text-[#7B3E3E]/80 leading-relaxed mb-6">
+            En esos primeros días de diagnóstico, búsqueda de respuestas y adaptación, sentimos la necesidad de 
+            encontrar historias reales, recursos útiles y sobre todo, una comunidad que entendiera nuestro camino.
+          </p>
+          
+          <p class="text-[#5C3A32] leading-relaxed mb-8">
+            <strong class="text-[#7B3E3E]">Univerxo Blend</strong> nació de esa necesidad. Es nuestro espacio para compartir 
+            capítulos de vida auténticos, crear vínculos que sanan y ofrecer recursos que realmente ayuden.
+          </p>
+
+          <!-- Valores clave -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+            <div class="bg-white/70 backdrop-blur-sm p-4 rounded-xl border border-[#E8C4B8]/30 -hover:translate-y-5">
+              <div class="flex items-center mb-2">
+                <Heart class="text-red-400 mx-2" />
+                <h4 class="font-semibold text-[#7B3E3E]">Autenticidad</h4>
+              </div>
+              <p class="text-[#5C3A32] text-sm">Historias reales desde la experiencia vivida</p>
+            </div>
+            
+            <div class="bg-white/70 backdrop-blur-sm p-4 rounded-xl border border-[#E8C4B8]/30">
+              <div class="flex items-center mb-2">
+                <HeartHandshake class="text-violet-300 mx-2" /> 
+                <h4 class="font-semibold text-[#7B3E3E]">Comunidad</h4>
+              </div>
+              <p class="text-[#5C3A32] text-sm">Vínculos que unen y sanan corazones</p>
+            </div>
+            
+            <div class="bg-white/70 backdrop-blur-sm p-4 rounded-xl border border-[#E8C4B8]/30">
+              <div class="flex items-center mb-2">
+                <Library class="text-green-700 mx-2" />
+                <h4 class="font-semibold text-[#7B3E3E]">Recursos</h4>
+              </div>
+              <p class="text-[#5C3A32] text-sm">Herramientas útiles y contenido educativo</p>
+            </div>
+            
+            <div class="bg-white/70 backdrop-blur-sm p-4 rounded-xl border border-[#E8C4B8]/30">
+              <div class="flex items-center mb-2">
+                <Star class="text-yellow-600 mx-2" />
+                <h4 class="font-semibold text-[#7B3E3E]">Esperanza</h4>
+              </div>
+              <p class="text-[#5C3A32] text-sm">Luz en el camino de la discapacidad</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Imagen emocional -->
+      <div class="lg:w-1/2">
+        <div class="relative">
+          <div class="bg-gradient-to-br from-[#E8D5E8]/30 to-[#E8C4B8]/30 rounded-3xl p-8 backdrop-blur-sm border border-white/20">
+            <img 
+              src="img/sobre-nosotros.svg" 
+              alt="Familia unida - Univerxo Blend" 
+              class="w-full rounded-2xl transition-transform duration-500"
+              loading="lazy"
+            >
+          </div>
+          
+          <!-- Elementos decorativos -->
+          <div class="absolute -top-4 -right-4 w-8 h-8 bg-[#C8A8D8] rounded-full animate-pulse"></div>
+          <div class="absolute -bottom-6 -left-6 w-6 h-6 bg-[#E8C4B8] rounded-full animate-pulse" style="animation-delay: 0.5s"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Misión y visión -->
+    <div class="bg-gradient-to-r from-[#E8D5E8]/40 to-[#E8C4B8]/40 rounded-3xl p-8 lg:p-6 backdrop-blur-sm border border-white/20">
+      <div class="grid lg:grid-cols-2 gap-12">
+        
+        <!-- Misión -->
+        <div class="text-center lg:text-left p-6 rounded-2xl">
+          <div class="inline-flex items-center justify-center w-16 h-16 bg-[#7B3E3E] rounded-full mb-6 mx-auto lg:mx-0">
+            <Heart class="w-8 h-8 text-white" stroke="currentColor">
+          </div>
+          <h3 class="text-2xl font-bold text-[#7B3E3E] mb-4">Nuestra Misión</h3>
+          <p class="text-[#5C3A32] leading-relaxed">
+            Acompañar a madres, padres y cuidadores en su camino junto a hijos con discapacidad, 
+            ofreciendo historias auténticas, recursos útiles y una comunidad que comprende y abraza.
+          </p>
+        </div>
+
+        <!-- Visión -->
+        <div class="text-center lg:text-left p-6 rounded-2xl">
+          <div class="inline-flex items-center justify-center w-16 h-16 bg-[#8B4513] rounded-full mb-6 mx-auto lg:mx-0">
+            <Eye class="w-8 h-8 text-white" stroke="currentColor">
+          </div>
+          <h3 class="text-2xl font-bold text-[#7B3E3E] mb-4">Nuestra Visión</h3>
+          <p class="text-[#5C3A32] leading-relaxed">
+            Ser la comunidad digital de referencia donde las familias encuentren luz, esperanza y 
+            herramientas para transformar los desafíos en oportunidades de crecimiento y amor.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Llamado a la acción -->
+    <div class="text-center mt-16">
+      <p class="text-[#7B3E3E] text-lg mb-8 font-medium">
+        "Historias que unen, vínculos que sanan"
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/capitulos" class="inline-flex items-center justify-center bg-[#7B3E3E] hover:bg-[#6A3434] text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+          <span>Lee nuestros capítulos</span>
+          <Book class="ml-2 w-5 h-5" stroke="currentColor">
+        </a>
+        
+        <a href="/contacto" class="inline-flex items-center justify-center bg-white hover:bg-gray-50 text-[#7B3E3E] font-semibold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl border border-[#E8C4B8]">
+          <span>Únete a la comunidad</span>
+          <UsersRound  class="ml-2 w-5 h-5" stroke="currentColor">
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* Animaciones sutiles */
+  .prose p {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+  
+  .prose p:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .prose p:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Hover effects para las tarjetas de valores */
+  .grid > div {
+    transition: all 0.3s ease;
+  }
+  
+  .grid > div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(123, 62, 62, 0.1);
+  }
+</style>
