@@ -1,138 +1,18 @@
 ---
 import { BookOpen, Download, Star, Users, CheckCircle, Gift, FileText, Heart, ShoppingCart, Eye } from '@lucide/astro';
+import { getCollection } from 'astro:content';
 
-// Datos de ejemplo para los ebooks
-const ebooks = [
-  {
-    id: 1,
-    titulo: "Guía de Primeros Pasos",
-    subtitulo: "Navegando el diagnóstico con esperanza",
-    descripcion: "Una guía completa para familias que acaban de recibir un diagnóstico. Incluye recursos, consejos prácticos y herramientas emocionales para los primeros momentos.",
-    precio: 15.99,
-    precioAnterior: 24.99,
-    imagen: "img/ebook-primeros-pasos.jpg",
-    paginas: 120,
-    categoria: "Guías",
-    tipo: "premium",
-    valoracion: 4.9,
-    descargas: 1250,
-    destacado: true,
-    contenido: [
-      "Entendiendo el diagnóstico",
-      "Primeros pasos prácticos",
-      "Manejo emocional",
-      "Recursos y contactos útiles",
-      "Planificación del futuro"
-    ]
-  },
-  {
-    id: 2,
-    titulo: "Herramientas de Comunicación",
-    subtitulo: "Conectando con tu hijo de manera efectiva",
-    descripcion: "Estrategias y técnicas de comunicación adaptadas para niños con diferentes tipos de discapacidad. Incluye pictogramas y recursos visuales.",
-    precio: 0,
-    imagen: "img/ebook-comunicacion.jpg",
-    paginas: 85,
-    categoria: "Herramientas",
-    tipo: "gratuito",
-    valoracion: 4.8,
-    descargas: 3200,
-    destacado: false,
-    contenido: [
-      "Comunicación no verbal",
-      "Pictogramas y señas",
-      "Rutinas de comunicación",
-      "Herramientas digitales",
-      "Casos prácticos"
-    ]
-  },
-  {
-    id: 3,
-    titulo: "Cuidando al Cuidador",
-    subtitulo: "Tu bienestar también importa",
-    descripcion: "Un recurso enfocado en el autocuidado para padres y cuidadores. Aprende a cuidar tu salud mental y emocional mientras cuidas a otros.",
-    precio: 12.99,
-    precioAnterior: 19.99,
-    imagen: "img/ebook-autocuidado.jpg",
-    paginas: 95,
-    categoria: "Bienestar",
-    tipo: "premium",
-    valoracion: 5.0,
-    descargas: 890,
-    destacado: false,
-    contenido: [
-      "Identificando el burnout",
-      "Técnicas de relajación",
-      "Estableciendo límites",
-      "Red de apoyo",
-      "Rutinas de autocuidado"
-    ]
-  },
-  {
-    id: 4,
-    titulo: "Actividades Terapéuticas",
-    subtitulo: "Juegos y ejercicios para el desarrollo",
-    descripcion: "Colección de actividades lúdicas y terapéuticas que puedes realizar en casa para estimular el desarrollo de tu hijo de manera divertida.",
-    precio: 0,
-    imagen: "img/ebook-actividades.jpg",
-    paginas: 110,
-    categoria: "Actividades",
-    tipo: "gratuito",
-    valoracion: 4.7,
-    descargas: 2100,
-    destacado: false,
-    contenido: [
-      "Actividades motoras",
-      "Juegos sensoriales",
-      "Ejercicios cognitivos",
-      "Arte terapia",
-      "Actividades familiares"
-    ]
-  },
-  {
-    id: 5,
-    titulo: "Navegando el Sistema Educativo",
-    subtitulo: "Derechos y recursos escolares",
-    descripcion: "Todo lo que necesitas saber sobre inclusión educativa, derechos de tu hijo y cómo trabajar con el sistema educativo de manera efectiva.",
-    precio: 18.99,
-    precioAnterior: 29.99,
-    imagen: "img/ebook-educacion.jpg",
-    paginas: 140,
-    categoria: "Educación",
-    tipo: "premium",
-    valoracion: 4.9,
-    descargas: 750,
-    destacado: false,
-    contenido: [
-      "Derechos educativos",
-      "Plan educativo individualizado",
-      "Comunicación con docentes",
-      "Adaptaciones curriculares",
-      "Recursos legales"
-    ]
-  },
-  {
-    id: 6,
-    titulo: "Construyendo Redes de Apoyo",
-    subtitulo: "La fuerza de la comunidad",
-    descripcion: "Aprende a identificar, construir y mantener redes de apoyo sólidas que te acompañen en este camino. Incluye directorio de organizaciones.",
-    precio: 0,
-    imagen: "img/ebook-redes.jpg",
-    paginas: 75,
-    categoria: "Comunidad",
-    tipo: "gratuito",
-    valoracion: 4.6,
-    descargas: 1800,
-    destacado: false,
-    contenido: [
-      "Identificando apoyos",
-      "Grupos de padres",
-      "Recursos profesionales",
-      "Comunidades online",
-      "Directorio de organizaciones"
-    ]
-  }
-];
+// Obtener todos los ebooks de la colección
+const ebooks = await getCollection('ebooks');
+
+// Ordenar por id para mantener el orden original
+const ebooksOrdenados = ebooks.sort((a, b) => a.data.id - b.data.id);
+
+// Obtener el ebook destacado (el primero)
+const ebookDestacado = ebooksOrdenados[0];
+
+// Obtener el resto de ebooks
+const otrosEbooks = ebooksOrdenados.slice(1);
 
 const categorias = [
   { nombre: "Todos", icono: BookOpen },
@@ -151,7 +31,7 @@ const categorias = [
     <!-- Encabezado -->
     <div class="text-center mb-16">
       <div class="inline-flex items-center bg-[#E8D5E8]/50 px-6 py-3 rounded-full mb-6">
-        <BookOpen class="w-4 h-4 text-[#7B3E3E] mr-2" stroke="currentColor" />
+        <BookOpen class="w-4 h-4 text-[#7B3E3E] mr-2" />
         <span class="text-[#7B3E3E] text-sm font-medium">Ebooks y recursos</span>
       </div>
       
@@ -172,19 +52,19 @@ const categorias = [
     <!-- Estadísticas -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
       <div class="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-[#E8C4B8]/30 text-center">
-        <div class="text-3xl font-bold text-[#7B3E3E] mb-2">12+</div>
+        <div class="text-3xl font-bold text-[#7B3E3E] mb-2">{ebooks.length}+</div>
         <div class="text-[#5C3A32] text-sm">Recursos disponibles</div>
       </div>
       <div class="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-[#E8C4B8]/30 text-center">
-        <div class="text-3xl font-bold text-[#7B3E3E] mb-2">8,000+</div>
+        <div class="text-3xl font-bold text-[#7B3E3E] mb-2">{ebooks.reduce((total, ebook) => total + ebook.data.descargas, 0).toLocaleString()}+</div>
         <div class="text-[#5C3A32] text-sm">Familias ayudadas</div>
       </div>
       <div class="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-[#E8C4B8]/30 text-center">
-        <div class="text-3xl font-bold text-[#7B3E3E] mb-2">4.8★</div>
+        <div class="text-3xl font-bold text-[#7B3E3E] mb-2">{(ebooks.reduce((total, ebook) => total + ebook.data.valoracion, 0) / ebooks.length).toFixed(1)}★</div>
         <div class="text-[#5C3A32] text-sm">Valoración promedio</div>
       </div>
       <div class="bg-white/70 backdrop-blur-sm rounded-xl p-6 border border-[#E8C4B8]/30 text-center">
-        <div class="text-3xl font-bold text-[#7B3E3E] mb-2">6</div>
+        <div class="text-3xl font-bold text-[#7B3E3E] mb-2">{ebooks.filter(ebook => ebook.data.tipo === 'gratuito').length}</div>
         <div class="text-[#5C3A32] text-sm">Recursos gratuitos</div>
       </div>
     </div>
@@ -200,7 +80,7 @@ const categorias = [
             }`}
           data-categoria={categoria.nombre}
         >
-          <categoria.icono class="w-4 h-4 mr-2" stroke="currentColor" />
+          <categoria.icono class="w-4 h-4 mr-2" />
           {categoria.nombre}
         </button>
       ))}
@@ -216,8 +96,8 @@ const categorias = [
             <div class="relative">
               <div class="bg-white/30 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-white/20">
                 <img 
-                  src={ebooks[0].imagen} 
-                  alt={ebooks[0].titulo}
+                  src={ebookDestacado.data.imagen} 
+                  alt={ebookDestacado.data.titulo}
                   class="w-full h-80 object-cover rounded-xl shadow-lg"
                   loading="lazy"
                 />
@@ -236,39 +116,39 @@ const categorias = [
           <!-- Contenido del ebook destacado -->
           <div class="lg:w-2/3">
             <div class="inline-flex items-center bg-gradient-to-r from-[#7B3E3E] to-[#8B4513] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
-              <Star class="w-4 h-4 mr-2" stroke="currentColor" />
+              <Star class="w-4 h-4 mr-2" />
               Recurso destacado
             </div>
             
             <h3 class="text-3xl lg:text-4xl font-bold text-[#7B3E3E] mb-2">
-              {ebooks[0].titulo}
+              {ebookDestacado.data.titulo}
             </h3>
             
             <p class="text-xl text-[#8B4513] mb-4 font-medium">
-              {ebooks[0].subtitulo}
+              {ebookDestacado.data.subtitulo}
             </p>
             
             <p class="text-[#5C3A32] leading-relaxed mb-6">
-              {ebooks[0].descripcion}
+              {ebookDestacado.data.descripcion}
             </p>
             
             <!-- Información del ebook -->
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
               <div class="flex items-center text-[#7B3E3E]/70">
-                <FileText class="w-4 h-4 mr-2" stroke="currentColor" />
-                <span class="text-sm">{ebooks[0].paginas} páginas</span>
+                <FileText class="w-4 h-4 mr-2" />
+                <span class="text-sm">{ebookDestacado.data.paginas} páginas</span>
               </div>
               <div class="flex items-center text-[#7B3E3E]/70">
-                <Download class="w-4 h-4 mr-2" stroke="currentColor" />
-                <span class="text-sm">{ebooks[0].descargas.toLocaleString()} descargas</span>
+                <Download class="w-4 h-4 mr-2" />
+                <span class="text-sm">{ebookDestacado.data.descargas.toLocaleString()} descargas</span>
               </div>
               <div class="flex items-center text-[#7B3E3E]/70">
-                <Star class="w-4 h-4 mr-2" stroke="currentColor" />
-                <span class="text-sm">{ebooks[0].valoracion}/5</span>
+                <Star class="w-4 h-4 mr-2" />
+                <span class="text-sm">{ebookDestacado.data.valoracion}/5</span>
               </div>
               <div class="flex items-center text-[#7B3E3E]/70">
-                <Users class="w-4 h-4 mr-2" stroke="currentColor" />
-                <span class="text-sm">{ebooks[0].categoria}</span>
+                <Users class="w-4 h-4 mr-2" />
+                <span class="text-sm">{ebookDestacado.data.categoria}</span>
               </div>
             </div>
             
@@ -276,22 +156,22 @@ const categorias = [
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-3">
                 <span class="text-3xl font-bold text-[#7B3E3E]">
-                  ${ebooks[0].precio}
+                  ${ebookDestacado.data.precio}
                 </span>
-                {ebooks[0].precioAnterior && (
+                {ebookDestacado.data.precioAnterior && (
                   <span class="text-lg text-[#7B3E3E]/50 line-through">
-                    ${ebooks[0].precioAnterior}
+                    ${ebookDestacado.data.precioAnterior}
                   </span>
                 )}
               </div>
               
               <div class="flex gap-3">
                 <button class="flex items-center justify-center bg-white/80 text-[#7B3E3E] px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:bg-white border border-[#E8C4B8]">
-                  <Eye class="w-4 h-4 mr-2" stroke="currentColor" />
+                  <Eye class="w-4 h-4 mr-2" />
                   Vista previa
                 </button>
                 <button class="flex items-center justify-center bg-[#7B3E3E] hover:bg-[#6A3434] text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-                  <ShoppingCart class="w-4 h-4 mr-2" stroke="currentColor" />
+                  <ShoppingCart class="w-4 h-4 mr-2" />
                   Obtener ahora
                 </button>
               </div>
@@ -303,13 +183,13 @@ const categorias = [
 
     <!-- Grid de ebooks -->
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {ebooks.slice(1).map((ebook) => (
-        <div class="card group cursor-pointer" data-categoria={ebook.categoria}>
+      {otrosEbooks.map((ebook) => (
+        <div class="card group cursor-pointer" data-categoria={ebook.data.categoria}>
           <!-- Imagen del ebook -->
           <div class="relative overflow-hidden">
             <img 
-              src={ebook.imagen} 
-              alt={ebook.titulo}
+              src={ebook.data.imagen} 
+              alt={ebook.data.titulo}
               class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
@@ -317,47 +197,47 @@ const categorias = [
             <!-- Badge de tipo -->
             <div class="absolute top-4 left-4">
               <span class={`px-3 py-1 rounded-full text-xs font-medium ${
-                ebook.tipo === 'gratuito' 
+                ebook.data.tipo === 'gratuito' 
                   ? 'bg-green-100 text-green-800' 
                   : 'bg-gradient-to-r from-[#7B3E3E] to-[#8B4513] text-white'
               }`}>
-                {ebook.tipo === 'gratuito' ? 'Gratuito' : 'Premium'}
+                {ebook.data.tipo === 'gratuito' ? 'Gratuito' : 'Premium'}
               </span>
             </div>
             
             <!-- Valoración -->
             <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full flex items-center">
-              <Star class="w-3 h-3 text-yellow-500 mr-1" fill="currentColor" stroke="currentColor" />
-              <span class="text-xs text-[#7B3E3E] font-medium">{ebook.valoracion}</span>
+              <Star class="w-3 h-3 text-yellow-500 mr-1" fill="currentColor" />
+              <span class="text-xs text-[#7B3E3E] font-medium">{ebook.data.valoracion}</span>
             </div>
           </div>
           
           <!-- Contenido -->
           <div class="p-6">
             <div class="flex items-center justify-between mb-2">
-              <span class="text-xs text-[#7B3E3E]/70 font-medium">{ebook.categoria}</span>
-              <span class="text-xs text-[#7B3E3E]/70">{ebook.paginas} páginas</span>
+              <span class="text-xs text-[#7B3E3E]/70 font-medium">{ebook.data.categoria}</span>
+              <span class="text-xs text-[#7B3E3E]/70">{ebook.data.paginas} páginas</span>
             </div>
             
             <h3 class="text-xl font-bold text-[#7B3E3E] mb-2 group-hover:text-[#8B4513] transition-colors">
-              {ebook.titulo}
+              {ebook.data.titulo}
             </h3>
             
             <p class="text-[#8B4513] text-sm font-medium mb-3">
-              {ebook.subtitulo}
+              {ebook.data.subtitulo}
             </p>
             
             <p class="text-[#5C3A32] text-sm leading-relaxed mb-4 line-clamp-3">
-              {ebook.descripcion}
+              {ebook.data.descripcion}
             </p>
             
             <!-- Contenido incluido -->
             <div class="mb-4">
               <p class="text-xs text-[#7B3E3E]/70 mb-2">Incluye:</p>
               <ul class="text-xs text-[#5C3A32] space-y-1">
-                {ebook.contenido.slice(0, 3).map((item) => (
+                {ebook.data.contenido.slice(0, 3).map((item) => (
                   <li class="flex items-center">
-                    <CheckCircle class="w-3 h-3 text-green-500 mr-2" stroke="currentColor" />
+                    <CheckCircle class="w-3 h-3 text-green-500 mr-2" />
                     {item}
                   </li>
                 ))}
@@ -367,14 +247,14 @@ const categorias = [
             <!-- Precio y botón -->
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
-                {ebook.precio === 0 ? (
+                {ebook.data.precio === 0 ? (
                   <span class="text-xl font-bold text-green-600">Gratis</span>
                 ) : (
                   <>
-                    <span class="text-xl font-bold text-[#7B3E3E]">${ebook.precio}</span>
-                    {ebook.precioAnterior && (
+                    <span class="text-xl font-bold text-[#7B3E3E]">${ebook.data.precio}</span>
+                    {ebook.data.precioAnterior && (
                       <span class="text-sm text-[#7B3E3E]/50 line-through">
-                        ${ebook.precioAnterior}
+                        ${ebook.data.precioAnterior}
                       </span>
                     )}
                   </>
@@ -382,12 +262,12 @@ const categorias = [
               </div>
               
               <button class={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                ebook.precio === 0
+                ebook.data.precio === 0
                   ? 'bg-green-100 text-green-800 hover:bg-green-200'
                   : 'bg-[#7B3E3E] text-white hover:bg-[#6A3434]'
               }`}>
-                <Download class="w-4 h-4 mr-2" stroke="currentColor" />
-                {ebook.precio === 0 ? 'Descargar' : 'Comprar'}
+                <Download class="w-4 h-4 mr-2" />
+                {ebook.data.precio === 0 ? 'Descargar' : 'Comprar'}
               </button>
             </div>
           </div>
@@ -408,12 +288,12 @@ const categorias = [
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <a href="/contacto" class="inline-flex items-center justify-center bg-[#7B3E3E] hover:bg-[#6A3434] text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
             <span>Solicitar recurso personalizado</span>
-            <Heart class="ml-2 w-5 h-5" stroke="currentColor" />
+            <Heart class="ml-2 w-5 h-5" />
           </a>
           
           <a href="/suscripcion" class="inline-flex items-center justify-center bg-white hover:bg-gray-50 text-[#7B3E3E] font-semibold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl border border-[#E8C4B8]">
             <span>Acceso a todos los recursos</span>
-            <Gift class="ml-2 w-5 h-5" stroke="currentColor" />
+            <Gift class="ml-2 w-5 h-5" />
           </a>
         </div>
       </div>
