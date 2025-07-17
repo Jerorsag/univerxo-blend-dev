@@ -69,22 +69,8 @@ const categorias = [
       </div>
     </div>
 
-    <!-- Filtros de categorías -->
-    <div class="flex flex-wrap justify-center gap-3 mb-12">
-      {categorias.map((categoria) => (
-        <button 
-          class={`flex items-center px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border border-transparent
-            ${categoria.nombre === 'Todos' 
-              ? 'bg-[#7B3E3E] text-white shadow-lg' 
-              : 'bg-white/80 text-[#7B3E3E] hover:bg-[#7B3E3E] hover:text-white'
-            }`}
-          data-categoria={categoria.nombre}
-        >
-          <categoria.icono class="w-4 h-4 mr-2" />
-          {categoria.nombre}
-        </button>
-      ))}
-    </div>
+    <!-- Espacio para separación visual donde estaban los filtros -->
+    <div class="mb-12"></div>
 
     <!-- Ebook destacado -->
     <div class="mb-16">
@@ -184,7 +170,7 @@ const categorias = [
     <!-- Grid de ebooks -->
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       {otrosEbooks.map((ebook) => (
-        <div class="card group cursor-pointer" data-categoria={ebook.data.categoria}>
+        <div class="card group cursor-pointer">
           <!-- Imagen del ebook -->
           <div class="relative overflow-hidden">
             <img 
@@ -193,7 +179,6 @@ const categorias = [
               class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
-            
             <!-- Badge de tipo -->
             <div class="absolute top-4 left-4">
               <span class={`px-3 py-1 rounded-full text-xs font-medium ${
@@ -204,33 +189,27 @@ const categorias = [
                 {ebook.data.tipo === 'gratuito' ? 'Gratuito' : 'Premium'}
               </span>
             </div>
-            
             <!-- Valoración -->
             <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full flex items-center">
               <Star class="w-3 h-3 text-yellow-500 mr-1" fill="currentColor" />
               <span class="text-xs text-[#7B3E3E] font-medium">{ebook.data.valoracion}</span>
             </div>
           </div>
-          
           <!-- Contenido -->
           <div class="p-6">
             <div class="flex items-center justify-between mb-2">
               <span class="text-xs text-[#7B3E3E]/70 font-medium">{ebook.data.categoria}</span>
               <span class="text-xs text-[#7B3E3E]/70">{ebook.data.paginas} páginas</span>
             </div>
-            
             <h3 class="text-xl font-bold text-[#7B3E3E] mb-2 group-hover:text-[#8B4513] transition-colors">
               {ebook.data.titulo}
             </h3>
-            
             <p class="text-[#8B4513] text-sm font-medium mb-3">
               {ebook.data.subtitulo}
             </p>
-            
             <p class="text-[#5C3A32] text-sm leading-relaxed mb-4 line-clamp-3">
               {ebook.data.descripcion}
             </p>
-            
             <!-- Contenido incluido -->
             <div class="mb-4">
               <p class="text-xs text-[#7B3E3E]/70 mb-2">Incluye:</p>
@@ -243,7 +222,6 @@ const categorias = [
                 ))}
               </ul>
             </div>
-            
             <!-- Precio y botón -->
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
@@ -260,7 +238,6 @@ const categorias = [
                   </>
                 )}
               </div>
-              
               <button class={`flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                 ebook.data.precio === 0
                   ? 'bg-green-100 text-green-800 hover:bg-green-200'
@@ -339,13 +316,7 @@ const categorias = [
     overflow: hidden;
   }
 
-  /* Filtros interactivos */
-  .filtro-activo {
-    background: linear-gradient(135deg, #7B3E3E, #8B4513) !important;
-    color: white !important;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(123, 62, 62, 0.2);
-  }
+  /* Filtros interactivos eliminados */
 
   /* Efectos especiales para el ebook destacado */
   .animate-pulse {
@@ -361,33 +332,3 @@ const categorias = [
     }
   }
 </style>
-
-<script>
-  // Funcionalidad de filtros
-  document.addEventListener('DOMContentLoaded', function() {
-    const filtros = document.querySelectorAll('[data-categoria]');
-    const ebooks = document.querySelectorAll('.card[data-categoria]');
-    
-    filtros.forEach(filtro => {
-      filtro.addEventListener('click', function() {
-        const categoria = this.dataset.categoria;
-        
-        // Actualizar botones activos
-        filtros.forEach(f => f.classList.remove('filtro-activo'));
-        this.classList.add('filtro-activo');
-        
-        // Filtrar ebooks
-        ebooks.forEach(ebook => {
-          const ebookCategoria = ebook.dataset.categoria;
-          
-          if (categoria === 'Todos' || ebookCategoria === categoria) {
-            ebook.style.display = 'block';
-            ebook.style.animation = 'fadeInUp 0.6s ease-out forwards';
-          } else {
-            ebook.style.display = 'none';
-          }
-        });
-      });
-    });
-  });
-</script>
