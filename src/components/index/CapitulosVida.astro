@@ -49,21 +49,8 @@ const categorias = [
       </p>
     </div>
 
-    <!-- Filtros de categorías -->
-    <div class="flex flex-wrap justify-center gap-3 mb-12">
-      {categorias.map((categoria) => (
-        <button 
-          class={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border border-transparent
-            ${categoria.nombre === 'Todos' 
-              ? 'bg-[#7B3E3E] text-white shadow-lg' 
-              : 'bg-white/80 text-[#7B3E3E] hover:bg-[#7B3E3E] hover:text-white'
-            }`}
-          data-categoria={categoria.nombre}
-        >
-          {categoria.nombre}
-        </button>
-      ))}
-    </div>
+    <!-- Espacio para separación visual donde estaban los filtros -->
+    <div class="mb-12"></div>
 
     <!-- Capítulo destacado -->
     {capituloDestacado && (
@@ -97,7 +84,7 @@ const categorias = [
                 </div>
               </div>
               
-              <a href={`/capitulos/${capituloDestacado.data.id}`} class="group inline-flex items-center justify-center bg-[#7B3E3E] hover:bg-[#6A3434] text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+              <a href={`/capitulos/${capituloDestacado.slug}`} class="group inline-flex items-center justify-center bg-[#7B3E3E] hover:bg-[#6A3434] text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                 <span>Leer capítulo completo</span>
                 <ArrowRight class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" stroke="currentColor" />
               </a>
@@ -127,8 +114,8 @@ const categorias = [
 
     <!-- Grid de capítulos -->
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {otrosCapitulos.map((capitulo, index) => (
-        <article class="card group cursor-pointer" data-categoria={capitulo.data.categoria}>
+      {otrosCapitulos.map((capitulo) => (
+        <a href={`/capitulos/${capitulo.slug}`} class="card group block cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#7B3E3E] transition-shadow" title={`Ir a ${capitulo.data.titulo}`} tabindex="0">
           <!-- Imagen del capítulo -->
           <div class="relative overflow-hidden">
             <img 
@@ -137,7 +124,6 @@ const categorias = [
               class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
-            
             <!-- Overlay con categoría -->
             <div class="absolute top-4 left-4">
               <span class="bg-white/90 backdrop-blur-sm text-[#7B3E3E] px-3 py-1 rounded-full text-xs font-medium">
@@ -145,17 +131,14 @@ const categorias = [
               </span>
             </div>
           </div>
-          
           <!-- Contenido -->
           <div class="p-6">
             <h3 class="text-xl font-bold text-[#7B3E3E] mb-3 group-hover:text-[#8B4513] transition-colors">
               {capitulo.data.titulo}
             </h3>
-            
             <p class="text-[#5C3A32] text-sm leading-relaxed mb-4 line-clamp-3">
               {capitulo.data.descripcion}
             </p>
-            
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-4 text-[#7B3E3E]/70">
                 <div class="flex items-center">
@@ -167,13 +150,10 @@ const categorias = [
                   <span class="text-xs">{capitulo.data.tiempoLectura}</span>
                 </div>
               </div>
-              
-              <a href={`/capitulos/${capitulo.data.id}`} class="text-[#7B3E3E] hover:text-[#8B4513] transition-colors">
-                <ArrowRight class="w-4 h-4" stroke="currentColor" />
-              </a>
+              <ArrowRight class="w-4 h-4 text-[#7B3E3E] group-hover:text-[#8B4513] transition-colors" stroke="currentColor" />
             </div>
           </div>
-        </article>
+        </a>
       ))}
     </div>
 
@@ -202,8 +182,8 @@ const categorias = [
   /* Animaciones para las tarjetas */
   .card {
     animation: fadeInUp 0.6s ease-out forwards;
+    transition: box-shadow 0.3s, transform 0.3s;
   }
-  
   .card:nth-child(2) { animation-delay: 0.1s; }
   .card:nth-child(3) { animation-delay: 0.2s; }
   .card:nth-child(4) { animation-delay: 0.3s; }
@@ -221,59 +201,17 @@ const categorias = [
     }
   }
 
-  /* Efectos de hover mejorados */
-  .card:hover {
+  .card:hover, .card:focus {
     transform: translateY(-8px);
     box-shadow: 0 20px 40px rgba(123, 62, 62, 0.12);
+    outline: none;
   }
 
-  /* Truncado de texto */
   .line-clamp-3 {
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-
-  /* Filtros interactivos */
-  [data-categoria] {
-    transition: all 0.3s ease;
-  }
-  
-  .filtro-activo {
-    background: linear-gradient(135deg, #7B3E3E, #8B4513) !important;
-    color: white !important;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(123, 62, 62, 0.2);
-  }
 </style>
 
-<script>
-  // Funcionalidad de filtros
-  document.addEventListener('DOMContentLoaded', function() {
-    const filtros = document.querySelectorAll('[data-categoria]');
-    const capitulos = document.querySelectorAll('.card[data-categoria]');
-    
-    filtros.forEach(filtro => {
-      filtro.addEventListener('click', function() {
-        const categoria = this.dataset.categoria;
-        
-        // Actualizar botones activos
-        filtros.forEach(f => f.classList.remove('filtro-activo'));
-        this.classList.add('filtro-activo');
-        
-        // Filtrar capítulos
-        capitulos.forEach(capitulo => {
-          const capCategoria = capitulo.dataset.categoria;
-          
-          if (categoria === 'Todos' || capCategoria === categoria) {
-            capitulo.style.display = 'block';
-            capitulo.style.animation = 'fadeInUp 0.6s ease-out forwards';
-          } else {
-            capitulo.style.display = 'none';
-          }
-        });
-      });
-    });
-  });
-</script>
