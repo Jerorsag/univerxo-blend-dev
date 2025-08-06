@@ -1,5 +1,23 @@
 ---
 import { Heart, MoveRight } from '@lucide/astro';
+import { getLandingHero } from '../../services/landing-page';
+
+// Se obtienen los datos del Hero
+const {
+  encabezado,
+  frase,
+  descripcion,
+  links,
+  imagen,
+  tagEncabezado,
+  tagImagen,
+  imageURL,
+  tagsConfianza
+} = await getLandingHero();
+
+tagsConfianza?.map(function(tag){
+  console.log(tag.nombre);
+})
 ---
 
 <section class="relative bg-gradient-to-br from-[#E8D5E8] via-[#F4E4D6] to-[#E8C4B8] py-24 overflow-hidden">
@@ -16,49 +34,60 @@ import { Heart, MoveRight } from '@lucide/astro';
     <div class="max-w-2xl lg:max-w-xl">
       <!-- Etiqueta emocional -->
       <div class="inline-flex items-center bg-white/40 backdrop-blur-sm px-4 py-2 rounded-full mb-6 border border-white/20">
-        <span class="text-[#7B3E3E] text-sm font-medium">Historias que unen, vínculos que sanan</span>
+        {tagEncabezado && (
+          <span class="text-[#7B3E3E] text-sm font-medium">
+            {tagEncabezado.nombre}
+          </span>
+        )}
       </div>
 
       <h1 class="text-5xl lg:text-6xl xl:text-7xl font-bold text-[#7B3E3E] leading-[1.1] mb-6">
-        Nuestra<br>
-        <span class="text-[#8B4513] bg-gradient-to-r from-[#8B4513] to-[#A0522D] bg-clip-text text-transparent">
-          historia
-        </span>
+        {encabezado?.split(' ')[0]}<br>
+        <span class="text-[#8B4513] bg-gradient-to-r from-[#8B4513] to-[#A0522D] bg-clip-text text-transparent">{encabezado?.split(' ').slice(1).join(' ')}</span>
       </h1>
+
       
       <p class="text-[#5C3A32] text-xl lg:text-2xl mb-4 leading-relaxed font-light">
-        Todo empezó con Simón…
+        {frase}
       </p>
       
       <p class="text-[#7B3E3E]/80 text-lg mb-10 leading-relaxed">
-        Una comunidad digital y emocional que nace desde la vivencia real de criar a un hijo con discapacidad. 
-        Compartimos historias auténticas, recursos útiles y creamos vínculos que sanan.
+        {descripcion}
       </p>
 
       <!-- Botones de acción -->
       <div class="flex flex-col sm:flex-row gap-4">
-        <a href="/sobre" class="group inline-flex items-center justify-center bg-[#7B3E3E] hover:bg-[#6A3434] text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-          <span>Conoce nuestra historia</span>
-          <MoveRight class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" stroke="currentColor">
-        </a>
-        
-        <a href="/cuentos" class="group inline-flex items-center justify-center bg-white/80 backdrop-blur-sm hover:bg-white text-[#7B3E3E] font-semibold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl border border-white/20">
-          <span>Cuentos de Simón</span>
-          <Heart class="ml-2 w-5 h-5 group-hover:scale-110 transition-transform" stroke="currentColor">
-        </a>
+        {links?.[0] && (
+          <a href={links[0].href} class="group inline-flex items-center justify-center bg-[#7B3E3E] hover:bg-[#6A3434] text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            <span>{links[0].label}</span>
+            <MoveRight class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" stroke="currentColor" />
+          </a>
+        )}
+        {links?.[1] && (
+          <a href={links[1].href} class="group inline-flex items-center justify-center bg-white/80 backdrop-blur-sm hover:bg-white text-[#7B3E3E] font-semibold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl border border-white/20">
+            <span>{links[1].label}</span>
+            <Heart class="ml-2 w-5 h-5 group-hover:scale-110 transition-transform" stroke="currentColor" />
+          </a>
+        )}
       </div>
 
-      <!-- Indicadores de confianza -->
-      <div class="flex items-center gap-6 mt-8 pt-8 border-t border-white/20">
-        <div class="text-center">
-          <div class="text-2xl font-bold text-[#7B3E3E]">28-45</div>
-          <div class="text-sm text-[#7B3E3E]/70">Años de edad</div>
+            <!-- Indicadores de confianza dinámicos -->
+      {tagsConfianza?.length > 0 && (
+        <div class="flex items-center gap-6 mt-8 pt-8 border-t border-white/20">
+          {tagsConfianza.map((tag, index) => {
+            const texto = tag?.nombre || "";
+            const [titulo, ...resto] = texto.split(" ");
+            const subtitulo = resto.join(" ");
+
+            return (
+              <div class="text-center" key={index}>
+                <p class="text-2xl font-bold text-[#7B3E3E]">{titulo}</p>
+                <p class="text-sm text-[#7B3E3E]/70">{subtitulo}</p>
+              </div>
+            );
+          })}
         </div>
-        <div class="text-center">
-          <div class="text-2xl font-bold text-[#7B3E3E]">+1000</div>
-          <div class="text-sm text-[#7B3E3E]/70">Familias</div>
-        </div>
-      </div>
+      )}
     </div>
 
     <!-- Ilustración mejorada -->
@@ -66,12 +95,14 @@ import { Heart, MoveRight } from '@lucide/astro';
       <div class="relative">
         <!-- Contenedor con efectos visuales -->
         <div class="relative bg-white/30 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/20">
-          <img 
-            src="img/hero-illustration.svg" 
-            alt="Ilustración madre e hijo - Univerxo Blend" 
-            class="animated-svg w-[380px] lg:w-[420px] xl:w-[480px] max-w-full rounded-2xl"
-            loading="lazy"
-          >
+          {imagen && (
+            <img
+              src={imageURL}
+              alt={imagen.alternativeText || 'Hero image'}
+              class="animated-svg w-[380px] lg:w-[420px] xl:w-[480px] max-w-full rounded-2xl"
+              loading="lazy"
+          />
+          )}
           
           <!-- Elementos decorativos flotantes -->
           <div class="absolute -top-3 -right-3 w-6 h-6 bg-[#C8A8D8] rounded-full animate-pulse"></div>
@@ -80,9 +111,11 @@ import { Heart, MoveRight } from '@lucide/astro';
         </div>
         
         <!-- Texto flotante inspiracional -->
-        <div class="absolute -bottom-6 -left-6 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border border-white/20">
-          <p class="text-[#7B3E3E] text-sm font-medium">Con amor y esperanza</p>
-        </div>
+        {tagImagen && (
+          <div class="absolute -bottom-6 -left-6 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg border border-white/20">
+            <p class="text-[#7B3E3E] text-sm font-medium">{tagImagen.nombre}</p>
+          </div>
+        )}
       </div>
     </div>
 
