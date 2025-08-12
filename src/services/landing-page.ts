@@ -57,7 +57,7 @@ export async function getLandingHero(): Promise<ProcessedHeroData> {
       imageURL,
     };
   } catch (error) {
-    console.error('❌ Error fetching landing hero:', error);
+    console.error('Error fetching landing hero:', error);
     throw new Error('Failed to fetch landing page hero data');
   }
 }
@@ -68,7 +68,7 @@ export async function getLandingBlocks(): Promise<Array<any>> {
     const response = await api<LandingPageData>('/landing-page');
     return response.data?.blocks || [];
   } catch (error) {
-    console.error('❌ Error fetching landing blocks:', error);
+    console.error('Error fetching landing blocks:', error);
     throw new Error('Failed to fetch landing page blocks');
   }
 }
@@ -79,7 +79,7 @@ export async function getLandingBlock<T = any>(componentType: string): Promise<T
     const blocks = await getLandingBlocks();
     return blocks.find((block) => block.__component === componentType) || null;
   } catch (error) {
-    console.error(`❌ Error fetching ${componentType} block:`, error);
+    console.error(`Error fetching ${componentType} block:`, error);
     return null;
   }
 }

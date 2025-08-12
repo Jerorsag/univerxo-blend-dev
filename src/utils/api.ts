@@ -18,7 +18,7 @@ interface StrapiError {
 export async function api<T>(endpoint: string): Promise<StrapiResponse<T>> {
   try {
     const url = `${STRAPI_URL}/api${endpoint}`;
-    console.log('🔗 Fetching from:', url);
+    console.log('Fetching from:', url);
     
     const response = await fetch(url, {
       headers: {
@@ -32,11 +32,11 @@ export async function api<T>(endpoint: string): Promise<StrapiResponse<T>> {
     }
 
     const data: StrapiResponse<T> = await response.json();
-    console.log('✅ Data fetched successfully from:', endpoint);
+    console.log('Data fetched successfully from:', endpoint);
     
     return data;
   } catch (error) {
-    console.error('❌ API Error:', error);
+    console.error('API Error:', error);
     throw error;
   }
 }
