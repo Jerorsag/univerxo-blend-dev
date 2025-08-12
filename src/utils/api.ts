@@ -1,4 +1,4 @@
-// src/utils/api.ts
+// URL base de Strapi, configurable desde el .env
 const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_URL || 'http://localhost:1337';
 
 interface StrapiResponse<T> {
@@ -14,16 +14,19 @@ interface StrapiError {
   };
 }
 
-// Función genérica para llamadas a la API
+/**
+ * Función genérica para llamar a la API de Strapi
+ * @param endpoint Endpoint sin /api al inicio (ej: '/landing-page')
+ */
 export async function api<T>(endpoint: string): Promise<StrapiResponse<T>> {
   try {
-    const url = `${STRAPI_URL}/api${endpoint}`;
+    // Eliminamos barra final de STRAPI_URL si existe
+    const baseUrl = STRAPI_URL.replace(/\/$/, '');
+    const url = `${baseUrl}/api${endpoint}`;
     console.log('Fetching from:', url);
     
     const response = await fetch(url, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
     });
 
     if (!response.ok) {
@@ -41,7 +44,18 @@ export async function api<T>(endpoint: string): Promise<StrapiResponse<T>> {
   }
 }
 
-// Función helper para construir URLs completas de imágenes
-export function buildImageUrl(imageUrl?: string): string {
-  return imageUrl ? `${STRAPI_URL}${imageUrl}` : '';
+/**
+ * Construye una URL completa de imagen a partir de la URL que devuelve Strapi
+ * Maneja rutas relativas y absolutas
+ */
+export function buildImageUrl(url: string) {
+  if (!url) return '';
+
+  // Si ya es absoluta, la devolvemos tal cual
+  if (url.startsWith('http')) {
+    return url;
+  }
+
+  // Si es relativa, la unimos con la base de Strapi
+  return `${STRAPI_URL.replace(/\/$/, '')}${url}`;
 }
