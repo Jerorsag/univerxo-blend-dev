@@ -69,9 +69,6 @@ const categorias = [
       </div>
     </div>
 
-    <!-- Espacio para separación visual donde estaban los filtros -->
-    <div class="mb-12"></div>
-
     <!-- Ebook destacado -->
     <div class="mb-16">
       <div class="bg-gradient-to-r from-[#E8D5E8]/40 to-[#E8C4B8]/40 rounded-3xl p-8 lg:p-12 backdrop-blur-sm border border-white/20">
@@ -150,16 +147,16 @@ const categorias = [
                   </span>
                 )}
               </div>
-              
-              <div class="flex gap-3">
-                <button class="flex items-center justify-center bg-white/80 text-[#7B3E3E] px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:bg-white border border-[#E8C4B8]">
+
+              <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                <a href="#vista-previa" class="flex items-center justify-center bg-white/80 text-[#7B3E3E] px-4 sm:px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:bg-white border border-[#E8C4B8] w-full sm:w-auto text-sm sm:text-base">
                   <Eye class="w-4 h-4 mr-2" />
                   Vista previa
-                </button>
-                <button class="flex items-center justify-center bg-[#7B3E3E] hover:bg-[#6A3434] text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                </a>
+                <a href="#comprar" class="flex items-center justify-center bg-[#7B3E3E] hover:bg-[#6A3434] text-white px-4 sm:px-6 py-3 rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 w-full sm:w-auto text-sm sm:text-base">
                   <ShoppingCart class="w-4 h-4 mr-2" />
                   Obtener ahora
-                </button>
+                </a>
               </div>
             </div>
           </div>
