@@ -19,8 +19,34 @@ const {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Título único por página -->
   <title>{title}</title>
-  <meta name="description" content={description}>
+
+  <!-- Meta descripción: breve, atractiva y con keywords -->
+  <meta name="description" content="{description}">
+
+  <!-- Palabras clave (menos usado hoy, pero aún válido en ciertos buscadores) -->
+  <meta name="keywords" content="café, blend, Mocawa, Armenia Quindío, barista, cafetería artesanal">
+
+  <!-- Autor del sitio -->
+  <meta name="author" content="Tu Nombre o Empresa">
+
+  <!-- Open Graph (para compartir en redes sociales) -->
+  <meta property="og:title" content="{title} | Nombre de tu Marca">
+  <meta property="og:description" content="{description}">
+  <meta property="og:image" content="/img/logo-blend.jpg">
+  <meta property="og:url" content="https://tusitio.com">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{title} | Nombre de tu Marca">
+  <meta name="twitter:description" content="{description}">
+  <meta name="twitter:image" content="/img/logo-blend.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" href="/img/logo-blend.jpg" type="image/jpg">
 </head>
 <body>
   <Header />
